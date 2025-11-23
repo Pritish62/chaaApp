@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit chat</title>
-    <link rel="stylesheet" href="./public/style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <h1>edit chat</h1>
-    <div class="edit-form">
+    <div class="chat">
+        <div class="edit-form">
         <p>from: <%= chat.from %> to: <%= chat.to %></p>
         <form method="post" action="/chat/<%= chat.id %>?_method=put" >
             <textarea name="msg" ><%= chat.msg %> </textarea>
-            <button id="edit-btn">Edit</button>
+            <button class="edit-btn">Edit</button>
         </form>
     </div>
+    </div>
+    
 </body>
 </html>

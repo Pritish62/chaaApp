@@ -28,8 +28,8 @@
                 <p><%= chat.created_at.toString().split(" ").slice(0,4).join(" ")%></p>
             </div>
            
-
-            <!-- edit btn -->
+                <div id="btn-container">
+                     <!-- edit btn -->
             <form method=" get" action="/chat/<%= chat.id %>/edit">
                     <button class="edit-btn">edit</button>
             </form>
@@ -38,11 +38,11 @@
             <form method="post" action="/chat/<%= chat.id %>?_method=delete">
                     <button class="delete-btn">delete</button>
             </form>
-
+                </div>
         </div>
 
         <% } %>
-                <form method="get" action="/chat">
+                <form method="get" action="/chat/new">
                     <button class="create-btn">create chat</button>
                 </form>
 
