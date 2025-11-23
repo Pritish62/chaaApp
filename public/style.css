@@ -120,15 +120,19 @@ button {
 button:active {
     transform: scale(0.98);
 }
+#btn-container{
+    display: flex;
+    justify-content: space-between;
+}
 
 /* Specific Button Colors */
 .edit-btn {
-    background-color: #f0ad4e;
+    background-color: #ea8a03;
     /* Orange */
 }
 
 .edit-btn:hover {
-    background-color: #ec971f;
+    background-color: #0b0b0b;
 }
 
 .delete-btn {
