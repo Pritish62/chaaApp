@@ -15,9 +15,17 @@ app.use(methodOverride('_method'));
 main().catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/chatApp');
+    await mongoose.connect('mongodb://127.0.0.1:27017/FakechatApp');
 
 }
+
+// /new-showroute
+
+app.get("/chat/:id", async (req, res, next) => {
+    const { id } = req.params;
+    let chat = await Chat.findById(id);
+    res.render("show.ejs", { chat })
+})
 
 //index route
 app.get("/chat", async (req, res) => {
@@ -46,30 +54,39 @@ app.post("/chat", async (req, res) => {
 
 //Edit Route
 
-app.get("/chat/:id/edit", async (req, res)=> {
-    let {id} = req.params;
+app.get("/chat/:id/edit", async (req, res) => {
+    let { id } = req.params;
     let chat = await Chat.findById(id);
-    res.render("edit.ejs", {chat});
+    res.render("edit.ejs", { chat });
+})
+
+app.put("/chat/:id", async (req, res) => {
+    const { id } = req.params;
+    const { msg: newMsg } = req.body;
+    const updateChat = await Chat.findOneAndUpdate({ _id: id }, { msg: newMsg }, { runValidators: true, new: true });
+    console.log(updateChat);
+    res.redirect("/chat");
 });
 
-app.put("/chat/:id", async (req, res)=> {
-    const {id} = req.params;
-   const  { msg: newMsg} = req.body;
-    const updateChat = await Chat.findOneAndUpdate({_id: id}, {msg:newMsg}, {runValidators: true, new:true});
-        console.log(updateChat);
-        res.redirect("/chat");
-});
-
-app.delete("/chat/:id", async (req, res)=> {
-    const {id} = req.params;
+app.delete("/chat/:id", async (req, res) => {
+    const { id } = req.params;
     const deletedMsg = await Chat.findByIdAndDelete(id);
-        console.log(deletedMsg);
-        res.redirect("/chat");
+    console.log(deletedMsg);
+    res.redirect("/chat");
 }
 );
 
 app.get("/", (req, res) => {
     res.send("all set");
+});
+app.use((err, req, res, next) => {
+    console.log("Error caught:", err);
+
+    const status = err.statusCode || 500;
+
+    res.status(status).send({
+        message: err.message
+    });
 });
 
 app.listen(3000, () => {
